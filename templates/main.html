@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+  <!-- Header -->
+  <header>
+    <div class="logo">RentEasy</div>
+    <nav>
+      <a href="#">Main page</a>
+      <a href="#">My ads</a>
+      <a href="#">Reservations</a>
+      <a href="#">Login</a>
+      <a href="#">Registration</a>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <form method="GET" class="search-bar">
+    <input type="text" name="q" placeholder="Город, район или адрес">
+    <input type="number" name="min_price" placeholder="Мин. цена">
+    <input type="number" name="max_price" placeholder="Макс. цена">
+    <select name="rooms">
+      <option value="">Все комнаты</option>
+      <option value="1">1 комната</option>
+      <option value="2">2 комнаты</option>
+      <option value="3">3+ комнаты</option>
+    </select>
+    <select name="type">
+      <option value="">Тип жилья</option>
+      <option value="apartment">Квартира</option>
+      <option value="house">Дом</option>
+      <option value="studio">Студия</option>
+    </select>
+    <button type="submit">Поиск</button>
+  </form>
+
+  <!-- Listings -->
+  <div class="cards-container">
+    {% for listing in listings %}
+    <div class="card">
+      <img src="{{ listing.photo.url }}" alt="{{ listing.title }}">
+      <div class="card-content">
+        <h3>{{ listing.title }}</h3>
+        <p>{{ listing.city }}, {{ listing.address }}</p>
+        <p class="price">{{ listing.price }} € / мес</p>
+        <div class="info">
+          <span>{{ listing.rooms }} комн.</span>
+          <span>{{ listing.type }}</span>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>Объявления не найдены.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 RentEasy. Все права защищены.
+  </footer>
+</body>
+</html>
