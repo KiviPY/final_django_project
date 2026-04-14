@@ -18,6 +18,7 @@ class RegisterApartments(models.Model):
     country = CountryField(blank_label='Choose country')
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=300)
+    house_number = models.PositiveIntegerField(default=0, null=True, blank=True)
     postal_code = models.CharField(max_length=20)
 
     # +- maybe for map
