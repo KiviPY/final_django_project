@@ -234,3 +234,48 @@ REST_FRAMEWORK = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+import os
+
+LOGGING = {
+    'version': 1, # Версия конфигурации
+    'disable_existing_loggers': False, # не отключать стандартные логгеры Django
+
+    'formatters': { # Это шаблоны логов
+        'verbose': {
+            'format': '[{levelname}] -> in {asctime} | {name} -> {message} |',
+            'style': '{',
+        },
+    },
+
+    'handlers': { # обработчики -> это куда отправлять лог
+        'console': {
+            'class': 'logging.StreamHandler', # вывод в консоль
+            'formatter': 'verbose', # использовать формат verbose
+        },
+        'file': {
+            'class': 'logging.FileHandler', # писать в файл
+            'filename': 'logs/django.log',
+            'formatter': 'verbose',
+        },
+        'file_error': {
+            'class': 'logging.FileHandler',
+            'filename': 'logs/file_error.log',
+            'formatter': 'verbose',
+            'level': 'ERROR',
+        }
+    },
+
+    'loggers': { # источник логов
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+
+        'custom': {
+            'handlers': ['console', 'file'], # писать: в консоль, в файл
+            'level': 'DEBUG',
+        }
+    }
+}
