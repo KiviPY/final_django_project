@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission, SAFE_METHODS, DjangoModelPermissions
 
 
 class IsOwnerOrReadOnly(BasePermission):
@@ -15,4 +15,4 @@ class IsOwner(BasePermission):
 
 class IsApartmentOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj.apartment.user == request.user
+        return obj.user == request.user

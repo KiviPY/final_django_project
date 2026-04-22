@@ -14,17 +14,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
-# from django.http import HttpResponse
-# from django.urls import path, include
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-#
-# from housing.views import (ApartmentListCreateAPI, ApartmentRetrieveUpdateDestroyAPI,
-#                            BookingAPICreate, BookingAPIRetrieveDestroy,
-#                            BookingAPIList, BookingAPIViewApartmentOwnerList, RetrieveUpdateBookingStatusAPIView,
-#                            ReviewListCreateAPIView, ReviewRetrieveUpdateDestroyAPIView,)
-# from users.views import UserAPICreate, MeAPIView, LoginAPI, LogoutAPI, Verify2FAAPIView
-#
+from django.contrib import admin
+from django.http import HttpResponse
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+
+from housing.views import (ApartmentListCreateAPI, ApartmentRetrieveUpdateDestroyAPI,
+                           BookingAPICreate, BookingAPIRetrieveDestroy,
+                           BookingAPIList, BookingAPIViewApartmentOwnerList, RetrieveUpdateBookingStatusAPIView,
+                           ReviewListCreateAPIView, ReviewRetrieveUpdateDestroyAPIView,)
+from housing.views.apartments import MyApartmentListAPI, MyApartmentDetailAPI
+from users.views import UserAPICreate, MeAPIView, LoginAPI, LogoutAPI, Verify2FAAPIView
+
 
 
 urlpatterns = [
@@ -45,6 +46,8 @@ urlpatterns = [
     # APARTMENTS
     path('apartments/', ApartmentListCreateAPI.as_view(), name='apartments-list'),
     path('apartments/<int:pk>/', ApartmentRetrieveUpdateDestroyAPI.as_view(), name='apartment-detail'),
+    path('my_apartments/', MyApartmentListAPI.as_view(), name='my_apartments'),
+    path('my_apartments/<int:pk>/', MyApartmentDetailAPI.as_view(), name='my_apartments-detail'),
 
     # REVIEWS
     path('apartments/<int:apartment_pk>/reviews/', ReviewListCreateAPIView.as_view(), name='reviews'),
@@ -61,6 +64,5 @@ urlpatterns = [
 ]
 
 # {
-#   "user_id": 11,
 #   "code": "123456"
 # }

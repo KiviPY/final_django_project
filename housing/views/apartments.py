@@ -4,7 +4,7 @@ from rest_framework import generics, permissions
 
 from housing.filters import ApartmentFilter
 from housing.models import RegisterApartments
-from housing.permissions import IsOwnerOrReadOnly
+from housing.permissions import IsOwnerOrReadOnly, IsApartmentOwner
 from housing.serializers import RegisterApartmentsSerializer
 
 
@@ -21,4 +21,22 @@ class ApartmentRetrieveUpdateDestroyAPI(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RegisterApartmentsSerializer
     permission_classes = [IsOwnerOrReadOnly]  # только владелец может изменять или удалять
 
+
+
+
+class MyApartmentListAPI(generics.ListAPIView):
+    serializer_class = RegisterApartmentsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = ApartmentFilter
+    ordering_fields = ['average_rating', 'created_at', 'views_count', 'price_per_month']
+
+    def get_queryset(self):
+        return RegisterApartments.objects.filter(user=self.request.user)
+
+
+class MyApartmentDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RegisterApartments.objects.all()
+    serializer_class = RegisterApartmentsSerializer
+    permission_classes = [IsApartmentOwner]
 
