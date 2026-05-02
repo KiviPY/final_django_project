@@ -31,10 +31,8 @@ from users.views import UserAPICreate, MeAPIView, LoginAPI, LogoutAPI, Verify2FA
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # # JWT
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    # JWT refresh
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # AUTH
     path('auth/register/', UserAPICreate.as_view(), name='register'),
